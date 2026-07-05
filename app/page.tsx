@@ -1,17 +1,23 @@
-import Container from "@/components/ui/Container";
+import Nav from "@/components/Nav";
+import Hero from "@/components/Hero";
+import Stack from "@/components/Stack";
+import Projects from "@/components/Projects";
+import Log from "@/components/Log";
+import Education from "@/components/Education";
+import Footer from "@/components/Footer";
 
 export default function Home() {
   return (
-    <main>
-      <Container className="py-24">
-        <h1 className="text-5xl font-semibold tracking-tight">
-          Hello, I’m Nilkesh
-        </h1>
-
-        <p className="mt-6 text-lg text-gray-600 max-w-2xl">
-          I build thoughtful software using Java, React, and modern system design principles.
-        </p>
-      </Container>
-    </main>
+    <>
+      <Nav />
+      <main className="flex-1">
+        <Hero />
+        <Stack />
+        <Projects />
+        <Log />
+        <Education />
+      </main>
+      <Footer />
+    </>
   );
 }

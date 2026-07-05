@@ -1,26 +1,118 @@
 @import "tailwindcss";
 
+/* ==========================================================================
+   DESIGN TOKENS — "Engineering Notebook"
+   Pale engineering-pad paper, pine-black ink, one rubber-stamp red used
+   only for status / emphasis. See DESIGN.md for the full rationale.
+   ========================================================================== */
+
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --paper: #eff3ea;       /* page background — pale engineering-pad green */
+  --paper-card: #f9faf7;  /* raised surfaces: cards, title block, code */
+  --ink: #16241c;         /* headings, primary text */
+  --ink-soft: #45524a;    /* body copy */
+  --ink-faint: #7c8a80;   /* captions, placeholders, disabled */
+  --accent: #b23a2e;      /* rubber-stamp red — status, links, emphasis only */
+  --accent-ink: #f9faf7;  /* text on top of --accent */
+  --rule: #c9d2c2;        /* hairline borders / grid lines */
+  --rule-strong: #9fae96; /* heavier dividers, table borders */
 }
 
 @theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  --color-paper: var(--paper);
+  --color-paper-card: var(--paper-card);
+  --color-ink: var(--ink);
+  --color-ink-soft: var(--ink-soft);
+  --color-ink-faint: var(--ink-faint);
+  --color-accent: var(--accent);
+  --color-accent-ink: var(--accent-ink);
+  --color-rule: var(--rule);
+  --color-rule-strong: var(--rule-strong);
+
+  --font-display: var(--font-plex-condensed);
+  --font-sans: var(--font-plex-sans);
+  --font-mono: var(--font-plex-mono);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+/* ---- base ---------------------------------------------------------- */
+
+* {
+  border-color: var(--rule);
+}
+
+html {
+  scroll-behavior: smooth;
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  background-color: var(--paper);
+  color: var(--ink-soft);
+  font-family: var(--font-sans);
+  /* faint graph-paper grid — the one decorative flourish on the page */
+  background-image:
+    linear-gradient(to right, color-mix(in srgb, var(--rule) 45%, transparent) 1px, transparent 1px),
+    linear-gradient(to bottom, color-mix(in srgb, var(--rule) 45%, transparent) 1px, transparent 1px);
+  background-size: 32px 32px;
+  background-position: center top;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+::selection {
+  background-color: var(--accent);
+  color: var(--accent-ink);
+}
+
+:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+
+/* ---- reusable primitives --------------------------------------------
+   Kept here (rather than only Tailwind utility soup in components) so
+   the vocabulary of the "document" system is defined in one place. */
+
+.eyebrow {
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--ink-faint);
+}
+
+.stamp {
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--accent);
+  border: 1px solid var(--accent);
+  padding: 0.15rem 0.5rem;
+  border-radius: 2px;
+  display: inline-block;
+  transform: rotate(-1deg);
+}
+
+.hairline {
+  border-top: 1px solid var(--rule-strong);
+}
+
+.tag {
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  color: var(--ink-soft);
+  border: 1px solid var(--rule-strong);
+  background: var(--paper-card);
+  padding: 0.2rem 0.5rem;
+  border-radius: 2px;
 }
